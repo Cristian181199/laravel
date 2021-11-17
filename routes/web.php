@@ -20,6 +20,7 @@ Route::get('/', function () {
 });
 
 Route::get('/depart', [DepartController::class, 'index']);
+Route::get('depart/{id}', [DepartController::class, 'show']);
 
 Route::get('/emple', [EmpleController::class, 'index']);
 Route::get('emple/{id}', [EmpleController::class, 'show']);

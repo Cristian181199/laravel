@@ -28,12 +28,12 @@ class EmpleController extends Controller
 
         if (empty($empleado)) {
             return redirect('/emple')
-                ->with('error', 'El empleado no existe');
+                ->with('erroremple', 'El empleado no existe');
         }
 
         return view('emple.show', [
             'empleado' => $empleado,
         ]);
     }
-    
+
 }

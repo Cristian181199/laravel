@@ -18,12 +18,15 @@
                 </svg>
             </header>
 
-            @if (session()->has('error'))
-            <div class="bg-red-100 rounded-lg p-4 mt-4 mb-4 text-sm text-red-700" role="alert">
-                <span class="font-medium">Error!</span> El empleado no existe.
-              </div>
+            @if (session()->has('errordepart'))
+                <div class="bg-red-100 rounded-lg p-4 mt-4 mb-4 text-sm text-red-700" role="alert">
+                    <span class="font-medium">Error!</span> El departamento no existe.
+                </div>
+            @elseif (session()->has('erroremple'))
+                <div class="bg-red-100 rounded-lg p-4 mt-4 mb-4 text-sm text-red-700" role="alert">
+                    <span class="font-medium">Error!</span> El empleado no existe.
+                </div>
             @endif
-
             <div class="mt-3 mb-3">
                 {{ $slot }}
             </div>

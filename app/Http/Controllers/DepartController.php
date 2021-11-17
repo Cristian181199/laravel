@@ -14,4 +14,21 @@ class DepartController extends Controller
             'departamentos' => $departs,
         ]);
     }
+
+    public function show($id)
+    {
+        $departamento = DB::select('SELECT * 
+                                  FROM depart
+                                 WHERE id = ?', [$id]);
+
+        if (empty($departamento)) {
+            return redirect('/depart')
+                ->with('errordepart', 'El departamento no existe');
+        }
+
+        return view('emple.show', [
+            'deaprtamento' => $departamento,
+        ]);
+    }
+
 }
