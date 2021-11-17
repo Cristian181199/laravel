@@ -9,7 +9,7 @@ class DepartController extends Controller
 {
     public function index()
     {
-        $departs = DB::select('select * from depart');
+        $departs = DB::select('SELECT * FROM depart');
         return view('depart.index', [
             'departamentos' => $departs,
         ]);

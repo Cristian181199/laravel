@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DepartController;
+use App\Http\Controllers\EmpleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,8 @@ Route::get('/', function () {
 
 Route::get('/depart', [DepartController::class, 'index']);
 
+Route::get('/emple', [EmpleController::class, 'index']);
+Route::get('emple/{id}', [EmpleController::class, 'show']);
 
 
 
