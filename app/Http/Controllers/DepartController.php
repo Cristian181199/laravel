@@ -17,18 +17,42 @@ class DepartController extends Controller
 
     public function show($id)
     {
-        $departamento = DB::select('SELECT * 
-                                  FROM depart
-                                 WHERE id = ?', [$id]);
+        $departamento = $this->findDepart($id);
 
-        if (empty($departamento)) {
-            return redirect('/depart')
-                ->with('errordepart', 'El departamento no existe');
-        }
+        //if (empty($departamento)) {
+        //    return redirect('/depart')
+        //        ->with('errordepart', 'El departamento no existe');
+        //}
 
-        return view('emple.show', [
-            'deaprtamento' => $departamento,
+        return view('depart.show', [
+            'departamento' => $departamento,
         ]);
+    }
+
+    public function create()
+    {
+        // Suponemos que todo esta bien
+        return view('depart.create');
+    }
+
+    public function store(Request $request)
+    {
+        $departamentonuevo = DB::insert('insert into depart (denominacion, localidad) values (:denominacion, :localidad)', 
+                                [':denominacion' => $request->denominacion, 
+                                ':localidad' => $request->localidad]);
+        
+        return redirect('/depart')->with('success', 'El departamento se ha creado');
+    }
+
+    private function findDepart($id)
+    {
+        $departamentos = DB::select('SELECT * 
+                                       FROM depart
+                                      WHERE id = ?', [$id]);
+
+        abort_unless($departamentos, 404);
+
+        return $departamentos[0];
     }
 
 }

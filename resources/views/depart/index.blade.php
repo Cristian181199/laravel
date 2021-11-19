@@ -24,7 +24,9 @@
                         <tr class="whitespace-nowrap">
                             <td class="px-6 py-4">
                                 <div class="text-sm text-gray-900">
+                                    <a href="/depart/{{ $depart->id }}" class="text-blue-800 hover:underline">
                                     {{ $depart->denominacion }}
+                                    </a>
                                 </div>
                             </td>
                             <td class="px-6 py-4">
@@ -44,6 +46,14 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+        <div>
+            <form action="/depart/create" method="GET">
+                @csrf
+                <button type="submit" class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                    Crear
+                </button>
+            </form>
         </div>
     </div>
 </x-layout>

@@ -20,7 +20,10 @@ Route::get('/', function () {
 });
 
 Route::get('/depart', [DepartController::class, 'index']);
-Route::get('depart/{id}', [DepartController::class, 'show']);
+Route::get('/depart/create', [DepartController::class, 'create']);
+Route::post('/depart', [DepartController::class, 'store']);
+Route::get('depart/{id}', [DepartController::class, 'show'])->where('id', '[0-9]+');
+
 
 Route::get('/emple', [EmpleController::class, 'index']);
 Route::get('emple/{id}', [EmpleController::class, 'show']);
