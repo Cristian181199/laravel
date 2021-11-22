@@ -44,6 +44,15 @@ class DepartController extends Controller
         return redirect('/depart')->with('success', 'El departamento se ha creado');
     }
 
+    public function destroy($id)
+    {
+        $departamento = $this->findDepart($id);
+
+        DB::delete('DELETE FROM depart WHERE id = ?', [$id]);
+
+        return redirect()->back()->with('success', 'Departamento borrado correctamente');
+    }
+
     private function findDepart($id)
     {
         $departamentos = DB::select('SELECT * 

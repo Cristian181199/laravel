@@ -4,12 +4,12 @@
             @csrf
             <div>
                 <label for="denominacion">Denominacion:</label>
-                <input type="text" name="denominacion" id="denominacion" class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full">
+                <input type="text" name="denominacion" id="denominacion" class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full">
             </div>
 
             <div>
                 <label for="localidad">Localidad:</label>
-                <input type="text" name="localidad" id="localidad" class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full">
+                <input type="text" name="localidad" id="localidad" class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full">
             </div>
 
             <div>
