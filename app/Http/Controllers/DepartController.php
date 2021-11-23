@@ -17,7 +17,7 @@ class DepartController extends Controller
 
     public function show($id)
     {
-        $departamento = $this->findDepart($id);
+        $departamento = $this->findDepartamento($id);
 
         //if (empty($departamento)) {
         //    return redirect('/depart')
@@ -35,25 +35,55 @@ class DepartController extends Controller
         return view('depart.create');
     }
 
-    public function store(Request $request)
+    public function store()
     {
-        $departamentonuevo = DB::insert('insert into depart (denominacion, localidad) values (:denominacion, :localidad)', 
-                                [':denominacion' => $request->denominacion, 
-                                ':localidad' => $request->localidad]);
+
+        $validados = request()->validate([
+            'denominacion' => 'required|max:255',
+            'localidad' => 'required|max:255',
+        ]);
+
+        DB::insert('INSERT INTO depart (denominacion, localidad) VALUES (?, ?)', 
+                [$validados['denominacion'], 
+                $validados['localidad'],]);
         
         return redirect('/depart')->with('success', 'El departamento se ha creado');
     }
 
     public function destroy($id)
     {
-        $departamento = $this->findDepart($id);
+        $departamento = $this->findDepartamento($id);
 
         DB::delete('DELETE FROM depart WHERE id = ?', [$id]);
 
         return redirect()->back()->with('success', 'Departamento borrado correctamente');
     }
 
-    private function findDepart($id)
+    public function edit($id)
+    {
+        $departamento = $this->findDepartamento($id);
+
+        return view('depart.edit', [
+            'departamento' => $departamento,
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validados = $request->validate([
+            'denominacion' => 'required|max:255',
+            'localidad' => 'required|max:255',
+        ]);
+
+        DB::update('UPDATE depart SET denominacion = ?, localidad = ? WHERE id = ?', 
+                [$validados['denominacion'],
+                $validados['localidad'],
+                $id]);
+
+        return redirect('/depart')->with('success', 'Departamento editado correctamente');
+    }
+
+    private function findDepartamento($id)
     {
         $departamentos = DB::select('SELECT * 
                                        FROM depart

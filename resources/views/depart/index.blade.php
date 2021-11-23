@@ -35,7 +35,7 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4">
-                                <a href="#"
+                                <a href="/depart/{{ $depart->id }}/edit"
                                     class="px-4 py-1 text-sm text-white bg-blue-400 rounded">Editar</a>
                             </td>
                             <td class="px-6 py-4">
@@ -51,12 +51,7 @@
             </table>
         </div>
         <div>
-            <form action="/depart/create" method="GET">
-                @csrf
-                <button type="submit" class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
-                    Crear
-                </button>
-            </form>
+            <a href="/depart/create" class="mt-4 text-blue-900 hover:underline">Insertar un nuevo departamento</a>
         </div>
     </div>
 </x-layout>
