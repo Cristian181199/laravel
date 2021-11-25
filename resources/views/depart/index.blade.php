@@ -32,7 +32,9 @@
                         <tr class="whitespace-nowrap">
                             <td class="px-6 py-4">
                                 <div class="text-sm text-gray-900">
-                                    {{ $depart->denominacion }}
+                                    <a href="/depart/{{ $depart->id }}" class="text-blue-800 hover:underline">
+                                        {{ $depart->denominacion }}
+                                    </a>
                                 </div>
                             </td>
                             <td class="px-6 py-4">

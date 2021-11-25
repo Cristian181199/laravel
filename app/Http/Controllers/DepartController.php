@@ -81,6 +81,15 @@ class DepartController extends Controller
             ->with('success', 'Departamento modificado con éxito.');
     }
 
+    public function show($id)
+    {
+        $departamento = $this->findDepartamento($id);
+
+        return view('depart.show', [
+            'departamento' => $departamento,
+        ]);
+    }
+
     private function validar()
     {
         $validados = request()->validate([
