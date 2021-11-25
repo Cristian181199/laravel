@@ -94,10 +94,21 @@ class DepartController extends Controller
     {
         $departamento = $this->findDepartamento($id);
 
-        DB::delete('DELETE FROM depart WHERE id = ?', [$id]);
 
-        return redirect()->back()
-            ->with('success', 'Departamento borrado correctamente');
+            if (count(DB::table('emple')
+            ->where('id', $id)
+            ->get()) === 0) {
+                DB::delete('DELETE FROM depart WHERE id = ?', [$id]);
+
+                return redirect()->back()
+                    ->with('success', 'Departamento borrado correctamente');
+            } else {
+                return redirect()->back()
+                    ->with('error', 'No se puede borrar el departamento por que tiene empleados.');
+            }
+
+
+
     }
 
     private function validar()
