@@ -9,54 +9,51 @@ class DepartController extends Controller
 {
     public function index()
     {
-        $departs = DB::select('SELECT * FROM depart');
+        $ordenes = ['denominacion', 'localidad'];
+        $orden = request()->query('orden') ?: 'denominacion';
+        abort_unless(in_array($orden, $ordenes), 404);
+
+        $departs = DB::table('depart')
+            ->orderBy($orden);
+
+        if (($denominacion = request()->query('denominacion')) !== null) {
+            $departs->where('denominacion', 'ilike', "%$denominacion%");
+        }
+
+        if (($localidad = request()->query('localidad')) !== null) {
+            $departs->where('localidad', 'ilike', "%$localidad%");
+        }
+
+        request()->flash();
+
+        $paginador = $departs->paginate(2);
+        $paginador->appends(compact(
+            'denominacion',
+            'localidad',
+            'orden'
+        ));
+
         return view('depart.index', [
-            'departamentos' => $departs,
-        ]);
-    }
-
-    public function show($id)
-    {
-        $departamento = $this->findDepartamento($id);
-
-        //if (empty($departamento)) {
-        //    return redirect('/depart')
-        //        ->with('errordepart', 'El departamento no existe');
-        //}
-
-        return view('depart.show', [
-            'departamento' => $departamento,
+            'departamentos' => $paginador,
         ]);
     }
 
     public function create()
     {
-        // Suponemos que todo esta bien
         return view('depart.create');
     }
 
     public function store()
     {
+        $validados = $this->validar();
 
-        $validados = request()->validate([
-            'denominacion' => 'required|max:255',
-            'localidad' => 'required|max:255',
+        DB::table('depart')->insert([
+            'denominacion' => $validados['denominacion'],
+            'localidad' => $validados['localidad'],
         ]);
 
-        DB::insert('INSERT INTO depart (denominacion, localidad) VALUES (?, ?)', 
-                [$validados['denominacion'], 
-                $validados['localidad'],]);
-        
-        return redirect('/depart')->with('success', 'El departamento se ha creado');
-    }
-
-    public function destroy($id)
-    {
-        $departamento = $this->findDepartamento($id);
-
-        DB::delete('DELETE FROM depart WHERE id = ?', [$id]);
-
-        return redirect()->back()->with('success', 'Departamento borrado correctamente');
+        return redirect('/depart')
+            ->with('success', 'Departamento insertado con éxito.');
     }
 
     public function edit($id)
@@ -68,30 +65,41 @@ class DepartController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        $validados = $request->validate([
+        $validados = $this->validar();
+        $this->findDepartamento($id);
+
+        DB::table('depart')
+            ->where('id', $id)
+            ->update([
+            'denominacion' => $validados['denominacion'],
+            'localidad' => $validados['localidad'],
+        ]);
+
+        return redirect('/depart')
+            ->with('success', 'Departamento modificado con éxito.');
+    }
+
+    private function validar()
+    {
+        $validados = request()->validate([
             'denominacion' => 'required|max:255',
             'localidad' => 'required|max:255',
         ]);
 
-        DB::update('UPDATE depart SET denominacion = ?, localidad = ? WHERE id = ?', 
-                [$validados['denominacion'],
-                $validados['localidad'],
-                $id]);
-
-        return redirect('/depart')->with('success', 'Departamento editado correctamente');
+        return $validados;
     }
 
     private function findDepartamento($id)
     {
-        $departamentos = DB::select('SELECT * 
-                                       FROM depart
-                                      WHERE id = ?', [$id]);
+        $departamentos = DB::table('depart')
+            ->where('id', $id)
+            ->get();
 
-        abort_unless($departamentos, 404);
+        abort_if($departamentos->isEmpty(), 404);
 
-        return $departamentos[0];
+        return $departamentos->first();
     }
 
 }
