@@ -106,9 +106,6 @@ class DepartController extends Controller
                 return redirect()->back()
                     ->with('error', 'No se puede borrar el departamento por que tiene empleados.');
             }
-
-
-
     }
 
     private function validar()

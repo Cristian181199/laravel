@@ -35,7 +35,8 @@ Route::get('/emple', [EmpleController::class, 'index']);
 Route::get('/emple/create', [EmpleController::class, 'create']);
 Route::post('/emple', [EmpleController::class, 'store'])
     ->name('emple.store');
-Route::get('/emple/{id}', [EmpleController::class, 'show']);
+Route::get('/emple/{id}', [EmpleController::class, 'show'])->where('id', '[0-9]+');
+Route::delete('/emple/{id}', [EmpleController::class, 'destroy']);
 
 
 
