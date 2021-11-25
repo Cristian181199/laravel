@@ -90,6 +90,16 @@ class DepartController extends Controller
         ]);
     }
 
+    public function destroy($id)
+    {
+        $departamento = $this->findDepartamento($id);
+
+        DB::delete('DELETE FROM depart WHERE id = ?', [$id]);
+
+        return redirect()->back()
+            ->with('success', 'Departamento borrado correctamente');
+    }
+
     private function validar()
     {
         $validados = request()->validate([

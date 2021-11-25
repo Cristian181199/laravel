@@ -36,4 +36,43 @@ class EmpleController extends Controller
         ]);
     }
 
+    public function create()
+    {
+
+        $departamentos = DB::table('depart')->select('id', 'denominacion')->get();
+
+
+
+        return view('emple.create', [
+            'departamentos' => $departamentos,
+        ]);
+    }
+
+    public function store()
+    {
+        $validados = $this->validar();
+
+        DB::table('emple')->insert([
+            'nombre' => $validados['nombre'],
+            'fecha_alt' => $validados['fecha_alt'],
+            'salario' => $validados['salario'],
+            'depart_id' => $validados['departamento'],
+        ]);
+
+        return redirect('/emple')
+            ->with('success', 'Empleado insertado con éxito.');
+    }
+
+    private function validar()
+    {
+        $validados = request()->validate([
+            'nombre' => 'required|max:255',
+            'fecha_alt' => 'date|date_format:Y-m-d',
+            'salario' => 'required|numeric|between:0,999999.99',
+            'departamento' => 'required|exists:depart,id',
+        ]);
+
+        return $validados;
+    }
+
 }
