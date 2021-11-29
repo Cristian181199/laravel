@@ -7,7 +7,7 @@
     </label>
     <input type="text" name="nombre" id="nombre"
         class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('nombre') border-red-500 @enderror"
-        value="{{ old('nombre', /*$denominacion*/) }}">
+        value="{{ old('nombre', $nombre) }}">
     @error('nombre')
         <p class="text-red-500 text-sm mt-1">
             {{ $message }}
@@ -21,7 +21,7 @@
     </label>
     <input type="date" name="fecha_alt" id="fecha_alt"
         class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('fecha_alt') border-red-500 @enderror"
-        value="{{ old('fecha_alt', /*$localidad*/) }}">
+        value="{{ old('fecha_alt', (new DateTime($fechAlt))->setTimeZone(new DateTimeZone('Europe/Madrid'))->format('d-m-Y H:i:s')) }}">
     @error('fecha_alt')
         <p class="text-red-500 text-sm mt-1">
             {{ $message }}
@@ -35,7 +35,7 @@
     </label>
     <input type="text" name="salario" id="salario"
         class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('salario') border-red-500 @enderror"
-        value="{{ old('salario', /*$localidad*/) }}">
+        value="{{ old('salario', $salario) }}">
     @error('salario')
         <p class="text-red-500 text-sm mt-1">
             {{ $message }}

@@ -65,6 +65,37 @@ class EmpleController extends Controller
             ->with('success', 'Empleado borrado correctamente');
     }
 
+    public function edit($id)
+    {
+        $departamentos = DB::table('depart')->select('id', 'denominacion')->get();
+
+        $empleado = $this->findEmpleado($id);
+
+
+        return view('emple.edit', [
+            'empleado' => $empleado,
+            'departamentos' => $departamentos,
+        ]);
+    }
+
+    public function update($id)
+    {
+        $validados = $this->validar();
+        $this->findEmpleado($id);
+
+        DB::table('emple')
+            ->where('id', $id)
+            ->update([
+            'nombre' => $validados['nombre'],
+            'fecha_alt' => $validados['fecha_alt'],
+            'salario' => $validados['salario'],
+            'depart_id' => $validados['departamento'],
+        ]);
+
+        return redirect('/emple')
+            ->with('success', 'Empleado modificado con éxito.');
+    }
+
     private function findEmpleado($id)
     {
         $empleados = DB::select('SELECT e.*, d.denominacion
