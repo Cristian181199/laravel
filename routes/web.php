@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DepartController;
 use App\Http\Controllers\EmpleController;
+use App\Http\Controllers\UsuariosController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,6 +42,11 @@ Route::get('/emple/{id}/edit', [EmpleController::class, 'edit']);
 Route::put('/emple/{id}', [EmpleController::class, 'update'])
     ->name('emple.update');
 
+
+
+Route::get('/login', [UsuariosController::class, 'loginForm']);
+Route::post('/login', [UsuariosController::class, 'login']);
+Route::post('/logout', [UsuariosController::class, 'logout']);
 
 /*
 GET /depart   => index (select global)

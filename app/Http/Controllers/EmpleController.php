@@ -113,7 +113,7 @@ class EmpleController extends Controller
     {
         $validados = request()->validate([
             'nombre' => 'required|max:255',
-            'fecha_alt' => 'date|date_format:Y-m-d',
+            'fecha_alt' => 'date|date_format:d-m-Y',
             'salario' => 'required|numeric|between:0,999999.99',
             'departamento' => 'required|exists:depart,id',
         ]);

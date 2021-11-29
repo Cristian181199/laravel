@@ -22,11 +22,21 @@
                         $home = empty($segmentos);
                         $emple = !empty($segmentos) && $segmentos[0] == 'emple';
                         $depart = !empty($segmentos) && $segmentos[0] == 'depart';
+                        $login = !empty($segmentos) && $segmentos[0] == 'login';
+                        $logout = !empty($segmentos) && $segmentos[0] == 'logout';
                     @endphp
                     <nav>
                         <a class="hover:text-blue-500 hover:underline @if($home) font-semibold @endif" href="/">Inicio</a> |
                         <a class="hover:text-blue-500 hover:underline @if($emple) font-semibold @endif" href="/emple">Empleados</a> |
-                        <a class="hover:text-blue-500 hover:underline @if($depart) font-semibold @endif" href="/depart">Departamentos</a>
+                        <a class="hover:text-blue-500 hover:underline @if($depart) font-semibold @endif" href="/depart">Departamentos</a> |
+                        @if (session()->has('login'))
+                        <form action="/logout" method="post">
+                            @csrf
+                            <input class="hover:text-blue-500 hover:underline @if($logout) font-semibold @endif" type="submit" value="Logout">
+                        </form>
+                        @else
+                            <a class="hover:text-blue-500 hover:underline @if($login) font-semibold @endif" href="/login">Login</a> |
+                        @endif
                     </nav>
                 </div>
             </header>
