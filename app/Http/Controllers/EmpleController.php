@@ -20,16 +20,8 @@ class EmpleController extends Controller
 
     public function show($id)
     {
-        $empleado = DB::select('SELECT e.*, d.denominacion
-                                  FROM emple e
-                                  JOIN depart d
-                                    ON depart_id = d.id
-                                 WHERE e.id = ?', [$id]);
 
-        if (empty($empleado)) {
-            return redirect('/emple')
-                ->with('erroremple', 'El empleado no existe');
-        }
+        $empleado = $this->findEmpleado($id);
 
         return view('emple.show', [
             'empleado' => $empleado,
