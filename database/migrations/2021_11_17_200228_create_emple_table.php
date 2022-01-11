@@ -13,7 +13,7 @@ class CreateEmpleTable extends Migration
      */
     public function up()
     {
-        Schema::create('emple', function (Blueprint $table) {
+        Schema::create('empleados', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
             $table->timestamp('fecha_alt')->nullable();

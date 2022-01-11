@@ -13,7 +13,7 @@ class CreateDepartTable extends Migration
      */
     public function up()
     {
-        Schema::create('depart', function (Blueprint $table) {
+        Schema::create('departamentos', function (Blueprint $table) {
             $table->id();
             $table->string('denominacion');
             $table->string('localidad');
