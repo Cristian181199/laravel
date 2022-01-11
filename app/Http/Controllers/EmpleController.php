@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Departamento;
+use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -9,10 +11,8 @@ class EmpleController extends Controller
 {
     public function index()
     {
-        $empleados = DB::select('SELECT e.*, d.denominacion
-                                   FROM emple e
-                                   JOIN depart d
-                                     ON depart_id = d.id');
+        $empleados = Empleado::all();
+
         return view('emple.index', [
             'empleados' => $empleados,
         ]);
@@ -21,7 +21,7 @@ class EmpleController extends Controller
     public function show($id)
     {
 
-        $empleado = $this->findEmpleado($id);
+        $empleado = Empleado::findOrFail($id);
 
         return view('emple.show', [
             'empleado' => $empleado,
@@ -30,13 +30,10 @@ class EmpleController extends Controller
 
     public function create()
     {
-
-        $departamentos = DB::table('depart')->select('id', 'denominacion')->get();
-
-
+        $departamentos = Departamento::all();
 
         return view('emple.create', [
-            'departamentos' => $departamentos,
+            'departamentos' => $departamentos
         ]);
     }
 
@@ -44,7 +41,7 @@ class EmpleController extends Controller
     {
         $validados = $this->validar();
 
-        DB::table('emple')->insert([
+        DB::table('empleados')->insert([
             'nombre' => $validados['nombre'],
             'fecha_alt' => $validados['fecha_alt'],
             'salario' => $validados['salario'],
@@ -57,9 +54,8 @@ class EmpleController extends Controller
 
     public function destroy($id)
     {
-        $empleados = $this->findEmpleado($id);
-
-        DB::delete('DELETE FROM emple WHERE id = ?', [$id]);
+        $empleado = Empleado::findOrFail($id);
+        $empleado->delete();
 
         return redirect()->back()
             ->with('success', 'Empleado borrado correctamente');
@@ -67,9 +63,8 @@ class EmpleController extends Controller
 
     public function edit($id)
     {
-        $departamentos = DB::table('depart')->select('id', 'denominacion')->get();
-
-        $empleado = $this->findEmpleado($id);
+        $departamentos = Departamento::all();
+        $empleado = Empleado::findOrFail($id);
 
 
         return view('emple.edit', [
@@ -81,9 +76,9 @@ class EmpleController extends Controller
     public function update($id)
     {
         $validados = $this->validar();
-        $this->findEmpleado($id);
+        $empleado = Empleado::findOrFail($id);
 
-        DB::table('emple')
+        DB::table('empleados')
             ->where('id', $id)
             ->update([
             'nombre' => $validados['nombre'],
@@ -94,19 +89,6 @@ class EmpleController extends Controller
 
         return redirect('/emple')
             ->with('success', 'Empleado modificado con éxito.');
-    }
-
-    private function findEmpleado($id)
-    {
-        $empleados = DB::select('SELECT e.*, d.denominacion
-                                   FROM emple e
-                                   JOIN depart d
-                                     ON depart_id = d.id
-                                  WHERE e.id = ?', [$id]);
-
-        abort_unless($empleados, 404);
-
-        return $empleados[0];
     }
 
     private function validar()
