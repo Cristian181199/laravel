@@ -98,13 +98,13 @@ class DepartController extends Controller
 
 
             if (Empleado::where('depart_id', $departamento->id)->doesntExists()) {
-                return redirect()->back()
-                    ->with('error', 'No se puede borrar el departamento por que tiene empleados.');
-            } else {
-                    $departamento->delete();
+                $departamento->delete();
 
                 return redirect()->back()
                     ->with('success', 'Departamento borrado correctamente');
+            } else {
+                    return redirect()->back()
+                    ->with('error', 'No se puede borrar el departamento por que tiene empleados.');
             }
     }
 
