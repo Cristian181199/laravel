@@ -97,7 +97,7 @@ class DepartController extends Controller
         $departamento = Departamento::findOrFail($id);
 
 
-            if (Empleado::where('depart_id', $departamento->id)->doesntExists()) {
+            if (Empleado::where('depart_id', $departamento->id)->doesntExist()) {
                 $departamento->delete();
 
                 return redirect()->back()
