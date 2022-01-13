@@ -16,12 +16,12 @@ class Vuelo extends Model
 
     public function origen()
     {
-        return $this->belongsTo(Aeropuerto::class, 'id');
+        return $this->belongsTo(Aeropuerto::class, 'origen_id');
     }
 
     public function destino()
     {
-        return $this->belongsTo(Aeropuerto::class, 'id');
+        return $this->belongsTo(Aeropuerto::class, 'destino_id');
     }
 
 }

@@ -15,8 +15,8 @@ class CreateVuelosTable extends Migration
     {
         Schema::create('vuelos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('origen_id')->constrained('aeropuertos',);
-            $table->foreignId('destino_id')->constrained('aeropuertos',);
+            $table->foreignId('origen_id')->constrained('aeropuertos');
+            $table->foreignId('destino_id')->constrained('aeropuertos');
             $table->timestamp('salida');
             $table->timestamp('llegada');
             $table->smallInteger('plazas');
