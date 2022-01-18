@@ -27,7 +27,9 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        //
+        return view('cliente.create', [
+            'cliente' => new Cliente(),
+        ]);
     }
 
     /**
@@ -38,7 +40,13 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validados = $this->validar();
+
+        $cliente = new Cliente($validados);
+        $cliente->save();
+
+        return redirect('/clientes')
+            ->with('success', 'Cliente insertado con exito.');
     }
 
     /**
@@ -84,5 +92,15 @@ class ClienteController extends Controller
     public function destroy(Cliente $cliente)
     {
         //
+    }
+
+    public function validar()
+    {
+        $validados = request()->validate([
+            'dni' => 'required|regex:/^(\d{8})([A-Z])$/',
+            'nombre' => 'required|max:255',
+        ]);
+
+        return $validados;
     }
 }

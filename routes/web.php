@@ -49,7 +49,11 @@ Route::get('/login', [UsuariosController::class, 'loginForm']);
 Route::post('/login', [UsuariosController::class, 'login']);
 Route::post('/logout', [UsuariosController::class, 'logout']);
 
-Route::resource('clientes', ClienteController::class);
+Route::resource('clientes', ClienteController::class, [
+    'names' => [
+        'store' => 'clientes.store'
+    ]
+]);
 
 /*
 GET /depart   => index (select global)

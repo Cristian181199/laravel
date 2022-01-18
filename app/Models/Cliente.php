@@ -9,6 +9,8 @@ class Cliente extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['dni', 'nombre'];
+
     public function facturas()
     {
         return $this->hasMany(Factura::class);
