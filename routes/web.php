@@ -51,7 +51,10 @@ Route::post('/logout', [UsuariosController::class, 'logout']);
 
 Route::resource('clientes', ClienteController::class, [
     'names' => [
-        'store' => 'clientes.store'
+        'store' => 'clientes.store',
+        'edit' => 'clientes.edit',
+        'update' => 'clientes.update',
+        'destroy' => 'clientes.destroy'
     ]
 ]);
 

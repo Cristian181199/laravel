@@ -29,17 +29,22 @@
                                 <tr class="whitespace-nowrap">
                                     <td class="px-6 py-4">
                                         <div class="text-sm text-gray-900">
-                                            {{ $cliente->nombre }}
+                                            <a href="{{ route('clientes.show', $cliente->id) }}"> {{ $cliente->nombre }} </a>
+
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="text-sm text-gray-500">{{ $cliente->dni }}</div>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <a href="#" class="px-4 py-1 text-sm text-white bg-blue-400 rounded">Edit</a>
+                                        <a href="{{ route('clientes.edit', $cliente->id) }}" class="px-4 py-1 text-sm text-white bg-blue-400 rounded">Editar</a>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <a href="#" class="px-4 py-1 text-sm text-white bg-red-400 rounded">Delete</a>
+                                        <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="px-4 py-1 text-sm text-white bg-red-400 rounded" onclick="return confirm('¿Seguro?')">Borrar</button>
+                                        </form>
                                     </td>
                                 </tr>
 

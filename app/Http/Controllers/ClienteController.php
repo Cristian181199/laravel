@@ -57,7 +57,9 @@ class ClienteController extends Controller
      */
     public function show(Cliente $cliente)
     {
-        //
+        return view('cliente.show', [
+            'cliente' => Cliente::findOrFail($cliente->id)
+        ]);
     }
 
     /**
@@ -68,7 +70,7 @@ class ClienteController extends Controller
      */
     public function edit(Cliente $cliente)
     {
-        //
+        return view('cliente.edit', compact('cliente'));
     }
 
     /**
@@ -80,7 +82,13 @@ class ClienteController extends Controller
      */
     public function update(Request $request, Cliente $cliente)
     {
-        //
+        $validados = $this->validar();
+        $cliente = Cliente::findOrFail($cliente->id);
+        $cliente->fill($validados);
+        $cliente->save();
+
+        return redirect('/clientes')
+            ->with('success', 'Cliente modificado con exito.');
     }
 
     /**
@@ -91,7 +99,17 @@ class ClienteController extends Controller
      */
     public function destroy(Cliente $cliente)
     {
-        //
+        $cliente = Cliente::findOrFail($cliente->id);
+
+        if ($cliente->facturas->isNotEmpty()) {
+            return redirect('/clientes')
+                ->with('error', 'El cliente tiene facturas asociadas.');
+        }
+
+        $cliente->delete();
+
+        return redirect('/clientes')
+            ->with('success', 'Cliente borrado con exito.');
     }
 
     public function validar()
