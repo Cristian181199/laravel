@@ -18,7 +18,7 @@ class CreateEmpleTable extends Migration
             $table->string('nombre');
             $table->timestamp('fecha_alt')->nullable();
             $table->decimal('salario', 6, 2);
-            $table->foreignId('depart_id')->constrained('depart');
+            $table->foreignId('depart_id')->constrained('departamentos');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateEmpleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('emple');
+        Schema::dropIfExists('empleados');
     }
 }
